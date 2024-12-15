@@ -57,3 +57,22 @@ def get_model(model_name: AllModelEnum, /) -> ModelT:
         return ChatBedrock(model_id=api_model_name, temperature=0.5)
     if model_name in FakeModelName:
         return FakeListChatModel(responses=["This is a test response from the fake model."])
+
+def call_llm(prompt: str, model: str = "gpt-4o-mini") -> str:
+    """Helper function to call LLM with consistent configuration."""
+    try:
+        llm = ChatOpenAI(
+            model=model,
+            temperature=0,
+            timeout=None,
+            max_retries=2,
+    )
+
+        messages = [
+            {"role": "user", "content": prompt}
+        ]
+        response = llm.invoke(messages)
+        return response.content.strip()
+    except Exception as e:
+        logger.error(f"Error while calling LLM: {e}")
+        return ""

@@ -35,7 +35,7 @@ unsafe_content_categories = {
     "S11": "Self-Harm.",
     "S12": "Sexual Content.",
     "S13": "Elections.",
-    "S14": "Code Interpreter Abuse.",
+    # "S14": "Code Interpreter Abuse.",
 }
 
 categories_str = "\n".join([f"{k}: {v}" for k, v in unsafe_content_categories.items()])

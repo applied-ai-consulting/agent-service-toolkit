@@ -1,7 +1,7 @@
-# 🧰 AI Agent Service Toolkit
+# 🧰 AI Agents Toolkit
 
-[![build status](https://github.com/JoshuaC215/agent-service-toolkit/actions/workflows/test.yml/badge.svg)](https://github.com/JoshuaC215/agent-service-toolkit/actions/workflows/test.yml) [![codecov](https://codecov.io/github/JoshuaC215/agent-service-toolkit/graph/badge.svg?token=5MTJSYWD05)](https://codecov.io/github/JoshuaC215/agent-service-toolkit) [![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2FJoshuaC215%2Fagent-service-toolkit%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)](https://github.com/JoshuaC215/agent-service-toolkit/blob/main/pyproject.toml)
-[![GitHub License](https://img.shields.io/github/license/JoshuaC215/agent-service-toolkit)](https://github.com/JoshuaC215/agent-service-toolkit/blob/main/LICENSE) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_red.svg)](https://agent-service-toolkit.streamlit.app/)
+[![build status](https://github.com/applied-ai-consulting//agent-service-toolkit/actions/workflows/test.yml/badge.svg)](https://github.com/applied-ai-consulting//agent-service-toolkit/actions/workflows/test.yml) [![codecov](https://codecov.io/github/applied-ai-consulting//agent-service-toolkit/graph/badge.svg?token=5MTJSYWD05)](https://codecov.io/github/applied-ai-consulting//agent-service-toolkit) [![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fapplied-ai-consulting/%2Fagent-service-toolkit%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)](https://github.com/applied-ai-consulting//agent-service-toolkit/blob/main/pyproject.toml)
+[![GitHub License](https://img.shields.io/github/license/applied-ai-consulting//agent-service-toolkit)](https://github.com/applied-ai-consulting//agent-service-toolkit/blob/main/LICENSE) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_red.svg)](https://agent-service-toolkit.streamlit.app/)
 
 A full toolkit for running an AI agent service built with LangGraph, FastAPI and Streamlit.
 
@@ -13,9 +13,6 @@ This project offers a template for you to easily build and run your own agents u
 
 ## Overview
 
-### [Try the app!](https://agent-service-toolkit.streamlit.app/)
-
-<a href="https://agent-service-toolkit.streamlit.app/"><img src="media/app_screenshot.png" width="600"></a>
 
 ### Quickstart
 
@@ -91,7 +88,7 @@ With that said, there are several other interesting projects in this space that 
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/JoshuaC215/agent-service-toolkit.git
+   git clone https://github.com/applied-ai-consulting/agent-service-toolkit.git
    cd agent-service-toolkit
    ```
 

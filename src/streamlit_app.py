@@ -22,7 +22,7 @@ from schema.task_data import TaskData, TaskDataStatus
 # The app heavily uses AgentClient to interact with the agent's FastAPI endpoints.
 
 
-APP_TITLE = "Agent Service Toolkit"
+APP_TITLE = "AI Agents"
 APP_ICON = "🧰"
 
 
@@ -80,53 +80,54 @@ async def main() -> None:
     # Config options
     with st.sidebar:
         st.header(f"{APP_ICON} {APP_TITLE}")
-        ""
-        "Full toolkit for running an AI agent service built with LangGraph, FastAPI and Streamlit"
-        with st.popover(":material/settings: Settings", use_container_width=True):
-            model_idx = agent_client.info.models.index(agent_client.info.default_model)
-            model = st.selectbox("LLM to use", options=agent_client.info.models, index=model_idx)
-            agent_list = [a.key for a in agent_client.info.agents]
-            agent_idx = agent_list.index(agent_client.info.default_agent)
-            agent_client.agent = st.selectbox(
-                "Agent to use",
-                options=agent_list,
-                index=agent_idx,
-            )
-            use_streaming = st.toggle("Stream results", value=True)
+        # ""
+        # "AI agents service"
+        # with st.popover(":material/settings: Settings", use_container_width=True):
 
-        @st.dialog("Architecture")
-        def architecture_dialog() -> None:
-            st.image(
-                "https://github.com/JoshuaC215/agent-service-toolkit/blob/main/media/agent_architecture.png?raw=true"
-            )
-            "[View full size on Github](https://github.com/JoshuaC215/agent-service-toolkit/blob/main/media/agent_architecture.png)"
-            st.caption(
-                "App hosted on [Streamlit Cloud](https://share.streamlit.io/) with FastAPI service running in [Azure](https://learn.microsoft.com/en-us/azure/app-service/)"
-            )
+        agent_list = [a.key for a in agent_client.info.agents]
+        agent_idx = agent_list.index(agent_client.info.default_agent)
+        agent_client.agent = st.selectbox(
+            "Agent to use",
+            options=agent_list,
+            index=agent_idx,
+        )
+        model_idx = agent_client.info.models.index(agent_client.info.default_model)
+        model = st.selectbox("LLM to use", options=agent_client.info.models, index=model_idx)
+        use_streaming = st.toggle("Stream results", value=True)
 
-        if st.button(":material/schema: Architecture", use_container_width=True):
-            architecture_dialog()
+        # @st.dialog("Architecture")
+        # def architecture_dialog() -> None:
+        #     st.image(
+        #         "https://github.com/JoshuaC215/agent-service-toolkit/blob/main/media/agent_architecture.png?raw=true"
+        #     )
+        #     "[View full size on Github](https://github.com/JoshuaC215/agent-service-toolkit/blob/main/media/agent_architecture.png)"
+        #     st.caption(
+        #         "App hosted on [Streamlit Cloud](https://share.streamlit.io/) with FastAPI service running in [Azure](https://learn.microsoft.com/en-us/azure/app-service/)"
+        #     )
 
-        with st.popover(":material/policy: Privacy", use_container_width=True):
-            st.write(
-                "Prompts, responses and feedback in this app are anonymously recorded and saved to LangSmith for product evaluation and improvement purposes only."
-            )
+        # if st.button(":material/schema: Architecture", use_container_width=True):
+        #     architecture_dialog()
+
+        # with st.popover(":material/policy: Privacy", use_container_width=True):
+        #     st.write(
+        #         "Prompts, responses and feedback in this app are anonymously recorded and saved to LangSmith for product evaluation and improvement purposes only."
+        #     )
 
         st.markdown(
             f"Thread ID: **{st.session_state.thread_id}**",
             help=f"Set URL query parameter ?thread_id={st.session_state.thread_id} to continue this conversation",
         )
 
-        "[View the source code](https://github.com/JoshuaC215/agent-service-toolkit)"
         st.caption(
-            "Made with :material/favorite: by [Joshua](https://www.linkedin.com/in/joshua-k-carroll/) in Oakland"
+            "Made with :material/favorite: by [Applied AI](https:/appliedaiconsulting.com)"
         )
 
     # Draw existing messages
     messages: list[ChatMessage] = st.session_state.messages
 
     if len(messages) == 0:
-        WELCOME = "Hello! I'm an AI-powered research assistant with web search and a calculator. Ask me anything!"
+        # WELCOME = "Hello! I'm an AI-powered research assistant with web search and a calculator. Ask me anything!"
+        WELCOME = f"Hello! I'm {agent_client.agent} AI Agent. How can I help you!"
         with st.chat_message("ai"):
             st.write(WELCOME)
 
@@ -254,7 +255,7 @@ async def draw_messages(
                         call_results = {}
                         for tool_call in msg.tool_calls:
                             status = st.status(
-                                f"""Tool Call: {tool_call["name"]}""",
+                                f"""Agent Call: {tool_call["name"]}""",
                                 state="running" if is_new else "complete",
                             )
                             call_results[tool_call["id"]] = status
