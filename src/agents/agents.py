@@ -8,7 +8,7 @@ from agents.research_assistant import research_assistant
 from agents.opspilot_assistant import opspilot_assistant
 from schema import AgentInfo
 
-DEFAULT_AGENT = "research-assistant"
+DEFAULT_AGENT = "opspilot-assistant"
 
 
 @dataclass

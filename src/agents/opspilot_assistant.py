@@ -79,6 +79,7 @@ instructions = f"""
             - SEND the commands to the GUARD AGENT/TOOL for validation.
             - ONCE VALIDATED, execute them via the EXECUTOR AGENT/TOOL WITHOUT DELAY.
         - YOU MUST ENFORCE the following:
+            - if the EXECUTOR Agent/Tool gives an error then do not loop
             - STRICTLY LIMIT this iterative process to a MAXIMUM OF 3 CYCLES.
             - TERMINATE the process IMMEDIATELY if the root cause is not identified after 3 iterations.
             - UNDER NO CIRCUMSTANCES should the loop continue beyond 3 cycles.
@@ -86,7 +87,7 @@ instructions = f"""
     5. SUMMARIZE THE ISSUE:
 
         - AFTER identifying the root cause OR reaching the iteration limit:
-            - DELIVER a FINAL SUMMARY that MUST include the following:
+            - DELIVER a FINAL SUMMARY that MUST include the following if the Executor has not failed:
                 1. **ISSUE SUMMARY**: A concise description of the original issue.
                 2. **ROOT CAUSE**: The identified reason for the issue OR a clear statement that the root cause could not be determined.
                 3. **SUPPORTING REASONING**: A detailed explanation of why this conclusion was reached.
@@ -95,7 +96,6 @@ instructions = f"""
 
     FOLLOW THESE INSTRUCTIONS EXACTLY. DEVIATION, FAILURE TO TRACK SCRIPTS, OR ANY REPEATED EXECUTION OF SCRIPTS WILL RESULT IN INEFFICIENT DIAGNOSTICS. YOUR ROLE IS ABSOLUTELY CRUCIAL—PERFORM WITH RIGID CONTROL AND PRECISION.
     """
-
 
 def wrap_model(model: BaseChatModel) -> RunnableSerializable[AgentState, AIMessage]:
     model = model.bind_tools(tools)

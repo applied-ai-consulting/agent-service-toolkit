@@ -201,6 +201,7 @@ async def draw_messages(
 
     # Iterate over the messages and draw them
     while msg := await anext(messages_agen, None):
+        call_results = {}
         # str message represents an intermediate token being streamed
         if isinstance(msg, str):
             # If placeholder is empty, this is the first token of a new message
@@ -252,7 +253,7 @@ async def draw_messages(
                         # Create a status container for each tool call and store the
                         # status container by ID to ensure results are mapped to the
                         # correct status container.
-                        call_results = {}
+                        # call_results = {}
                         for tool_call in msg.tool_calls:
                             status = st.status(
                                 f"""Agent Call: {tool_call["name"]}""",
@@ -265,7 +266,8 @@ async def draw_messages(
                         # Expect one ToolMessage for each tool call.
                         for _ in range(len(call_results)):
                             tool_result: ChatMessage = await anext(messages_agen)
-                            if tool_result.type != "tool":
+                            # print(tool_result)
+                            if hasattr(tool_result, 'type') and tool_result.type != "tool":
                                 st.error(f"Unexpected ChatMessage type: {tool_result.type}")
                                 st.write(tool_result)
                                 st.stop()
@@ -274,10 +276,64 @@ async def draw_messages(
                             # status container with the result
                             if is_new:
                                 st.session_state.messages.append(tool_result)
-                            status = call_results[tool_result.tool_call_id]
-                            status.write("Output:")
-                            status.write(tool_result.content)
-                            status.update(state="complete")
+                            if hasattr(tool_result, 'tool_call_id'):
+                                status = call_results[tool_result.tool_call_id]
+                                status.write("Output:")
+                                status.write(tool_result.content)
+                                status.update(state="complete")
+            case "tool":
+                # If we're rendering new messages, store the message in session state
+                if is_new:
+                    st.session_state.messages.append(msg)
+
+                # If the last message type was not AI, create a new chat message
+                if last_message_type != "tool":
+                    last_message_type = "tool"
+                    st.session_state.last_message = st.chat_message("tool")
+
+                with st.session_state.last_message:
+                    # If the message has content, write it out.
+                    # Reset the streaming variables to prepare for the next message.
+                    if msg.content:
+                        if streaming_placeholder:
+                            streaming_placeholder.write(msg.content)
+                            streaming_content = ""
+                            streaming_placeholder = None
+                        else:
+                            st.write(msg.content)
+
+                    if msg.tool_calls:
+                        # Create a status container for each tool call and store the
+                        # status container by ID to ensure results are mapped to the
+                        # correct status container.
+                        # call_results = {}
+                        for tool_call in msg.tool_calls:
+                            status = st.status(
+                                f"""Agent Call: {tool_call["name"]}""",
+                                state="running" if is_new else "complete",
+                            )
+                            call_results[tool_call["id"]] = status
+                            status.write("Input:")
+                            status.write(tool_call["args"])
+
+                        # Expect one ToolMessage for each tool call.
+                        for _ in range(len(call_results)):
+                            tool_result: ChatMessage = await anext(messages_agen)
+                            # print(tool_result)
+                            if hasattr(tool_result, 'type') and tool_result.type != "tool":
+                                st.error(f"Unexpected ChatMessage type: {tool_result.type}")
+                                st.write(tool_result)
+                                st.stop()
+
+                            # Record the message if it's new, and update the correct
+                            # status container with the result
+                            if is_new:
+                                st.session_state.messages.append(tool_result)
+                            if hasattr(tool_result, 'tool_call_id'):
+                                status = call_results[tool_result.tool_call_id]
+                                status.write("Output:")
+                                status.write(tool_result.content)
+                                status.update(state="complete")
 
             case "custom":
                 # CustomData example used by the bg-task-agent

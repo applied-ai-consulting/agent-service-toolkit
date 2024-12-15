@@ -15,7 +15,6 @@ from agents.llama_guard import LlamaGuard, LlamaGuardOutput, SafetyAssessment
 from agents.tools import calculator
 from core import get_model, settings
 
-
 class AgentState(MessagesState, total=False):
     """`total=False` is PEP589 specs.
 

@@ -13,6 +13,9 @@ from langchain_core.tools import BaseTool, tool
 from langchain_openai.chat_models.base import ChatOpenAI
 from langchain_community.tools import ShellTool
 
+from core.llm import call_llm
+from agents.utils import validate_and_clean_json
+
 from .logger import get_logger
 
 logger = get_logger(__name__)

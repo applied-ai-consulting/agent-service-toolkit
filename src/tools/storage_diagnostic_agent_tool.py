@@ -58,7 +58,6 @@ def storage_diagnostic_agent_tool(
    - Commands to collect relevant storage diagnostics (e.g., `df -h`, `lsblk`, etc.).
 
 4. Return the output as a JSON object in the following format:
-   ```json
    {{
        "diagnostic_script": "{"the generated bash script"}",
        "path_location": "/path/to/save/script.sh",

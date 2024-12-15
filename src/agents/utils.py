@@ -1,3 +1,4 @@
+import json
 from typing import Any
 
 from langchain_core.callbacks import adispatch_custom_event
@@ -29,7 +30,7 @@ class CustomData(BaseModel):
             config=merge_configs(config, dispatch_config),
         )
 
-def validate_and_clean_json(response: str, default_value: str = "unknown") -> dict:
+def validate_and_clean_json(response: str, default_value: str = "unknown") -> str:
     """
     Validates and cleans up JSON response from LLM.
     Args:
@@ -48,6 +49,7 @@ def validate_and_clean_json(response: str, default_value: str = "unknown") -> di
             json_str = json_str[:json_str.rfind('}')+1]
 
         return json.loads(json_str)
+        # return json_str
 
     except (json.JSONDecodeError, ValueError):
         # If JSON parsing fails, return a default dictionary
