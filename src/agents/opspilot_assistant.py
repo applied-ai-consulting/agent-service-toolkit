@@ -13,12 +13,12 @@ from langgraph.managed import RemainingSteps
 from langgraph.prebuilt import ToolNode
 
 from agents.llama_guard import LlamaGuard, LlamaGuardOutput, SafetyAssessment
-from tools.executor_agent_tool import executor_agent_tool
-from tools.network_diagnostic_agent_tool import network_diagnostic_agent_tool
-from tools.storage_diagnostic_agent_tool import storage_diagnostic_agent_tool
-from tools.compute_diagnostic_agent_tool import compute_diagnostic_agent_tool
-from tools.security_diagnostic_agent_tool import security_diagnostic_agent_tool
-from tools.guard_diagnostic_agent_tool import guard_diagnostic_agent_tool
+from tools.executor_agent_tool import executor
+from tools.network_diagnostic_agent_tool import network_diagnostic
+from tools.storage_diagnostic_agent_tool import storage_diagnostic
+from tools.compute_diagnostic_agent_tool import compute_diagnostic
+from tools.security_diagnostic_agent_tool import security_diagnostic
+from tools.guard_diagnostic_agent_tool import guard_diagnostic
 from core import get_model, settings
 
 
@@ -27,15 +27,15 @@ class AgentState(MessagesState, total=False):
 
     documentation: https://typing.readthedocs.io/en/latest/spec/typeddict.html#totality
     """
-    messages: Annotated[list[AnyMessage], add_messages]
-    diagnostic_script: Optional[dict]
-    diagnostic_script_execution_output: Optional[list] 
+    # messages: Annotated[list[AnyMessage], add_messages]
+    # diagnostic_script: Optional[dict]
+    # diagnostic_script_execution_output: Optional[list] 
     safety: LlamaGuardOutput
     remaining_steps: RemainingSteps
 
 # web_search = DuckDuckGoSearchResults(name="WebSearch")
-tools = [network_diagnostic_agent_tool, storage_diagnostic_agent_tool, compute_diagnostic_agent_tool, 
-    security_diagnostic_agent_tool, guard_diagnostic_agent_tool, executor_agent_tool]
+tools = [network_diagnostic, storage_diagnostic, compute_diagnostic, 
+    security_diagnostic, guard_diagnostic, executor]
 
 instructions = f"""
     You are the Supervisor Agent for OpsPilot, an intelligent system diagnostics coordinator. You are tasked with managing the entire diagnostic process with absolute control and precision. Your role is CRITICAL to ensure issues are resolved efficiently, following the outlined process with NO EXCEPTIONS.

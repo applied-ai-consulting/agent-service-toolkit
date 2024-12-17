@@ -19,6 +19,7 @@ from core.llm import call_llm
 from agents.utils import validate_and_clean_json
 
 logger = get_logger(__name__)
+
 def compute_diagnostic_agent_tool(user_input: str):
     """
     Your primary role is to analyze compute reported problems, generate precise and actionable diagnostic scripts, and evaluate available data to determine the root cause.
@@ -63,12 +64,12 @@ def compute_diagnostic_agent_tool(user_input: str):
         # Assuming `call_llm` will execute the prompt and return a response
         response = call_llm(prompt)  # This function needs to handle the LLM's response and parse it
         # Return the response after cleaning and validating the JSON format
-        return validate_and_clean_json(response)
+        return validate_and_clean_json(response, type="ai")
 
     except Exception as e:
         logger.error(f"Error in compute issue identification: {str(e)}")
         return validate_and_clean_json("", default_value="error")
 
-compute_diagnostic_agent_tool: BaseTool = tool(compute_diagnostic_agent_tool)
-compute_diagnostic_agent_tool.name = "ComputeDiagnostic"
+compute_diagnostic: BaseTool = tool(compute_diagnostic_agent_tool)
+compute_diagnostic.name = "ComputeDiagnostic"
 

@@ -74,6 +74,6 @@ def storage_diagnostic_agent_tool(
         logger.error(f"Error in storage issue identification: {str(e)}")
         return validate_and_clean_json("", default_value="error")
 
-storage_diagnostic_agent_tool: BaseTool = tool(storage_diagnostic_agent_tool)
-storage_diagnostic_agent_tool.name = "StorageDiagnostic"
+storage_diagnostic: BaseTool = tool(storage_diagnostic_agent_tool)
+storage_diagnostic.name = "StorageDiagnostic"
 

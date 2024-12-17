@@ -76,6 +76,6 @@ def guard_diagnostic_agent_tool(diagnostic_script: str):
         logger.error(f"Error in market segment identification: {str(e)}")
         return validate_and_clean_json("", default_value="error")
 
-guard_diagnostic_agent_tool: BaseTool = tool(guard_diagnostic_agent_tool)
-guard_diagnostic_agent_tool.name = "GuardDiagnostic"
+guard_diagnostic: BaseTool = tool(guard_diagnostic_agent_tool)
+guard_diagnostic.name = "GuardDiagnostic"
 

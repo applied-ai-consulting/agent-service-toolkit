@@ -147,6 +147,7 @@ async def message_generator(
 
         for message in new_messages:
             try:
+                print(f"message_generator ::: {message}")
                 chat_message = langchain_to_chat_message(message)
                 chat_message.run_id = str(run_id)
             except Exception as e:

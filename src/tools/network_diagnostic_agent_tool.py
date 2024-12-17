@@ -69,6 +69,6 @@ def network_diagnostic_agent_tool(user_input: str):
         logger.error(f"Error in network issue identification: {str(e)}")
         return validate_and_clean_json("", default_value="error")
 
-network_diagnostic_agent_tool: BaseTool = tool(network_diagnostic_agent_tool)
-network_diagnostic_agent_tool.name = "NetworkDiagnostic"
+network_diagnostic: BaseTool = tool(network_diagnostic_agent_tool)
+network_diagnostic.name = "NetworkDiagnostic"
 

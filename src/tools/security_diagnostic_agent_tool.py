@@ -69,6 +69,6 @@ def security_diagnostic_agent_tool(user_input: str):
         logger.error(f"Error in security issue identification: {str(e)}")
         return validate_and_clean_json("", default_value="error")
 
-security_diagnostic_agent_tool: BaseTool = tool(security_diagnostic_agent_tool)
-security_diagnostic_agent_tool.name = "SecurityDiagnostic"
+security_diagnostic: BaseTool = tool(security_diagnostic_agent_tool)
+security_diagnostic.name = "SecurityDiagnostic"
 

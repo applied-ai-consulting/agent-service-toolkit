@@ -109,6 +109,6 @@ def executor_agent_tool(user_input: str):
         logger.error(f"Error in security issue identification: {str(e)}")
         return validate_and_clean_json("", default_value="error")
 
-executor_agent_tool: BaseTool = tool(executor_agent_tool)
-executor_agent_tool.name = "Executor"
+executor: BaseTool = tool(executor_agent_tool)
+executor.name = "Executor"
 
